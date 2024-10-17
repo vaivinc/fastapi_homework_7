@@ -24,6 +24,7 @@ class User(BaseModel):
             raise ValueError("name or surname can only have letters")
         if len(v) < 2:
             raise ValueError("len of name or surname not have  2 letters")
+        return v
 
     @field_validator("password")
     @classmethod
@@ -38,11 +39,12 @@ class User(BaseModel):
             raise ValueError("password must have one special character")
         if not any(ch.isdigit() for ch in v):
             raise ValueError("password must have one number")
+        return v
 
 
-@app.post("/register")
+@app.post("/register/")
 async def register_user(user: User):
-    return {"message": "User is created!"}
+    return user
 
 
 if __name__ == "__main__":
